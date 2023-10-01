@@ -43,7 +43,7 @@ def parseCompanyListing(link):
         if len(dirty_locations) > 1:
             # skip empty location from delimiter
             for location in dirty_locations[1:]:
-                locations.append(location.strip())
+                locations.append(str(location.strip()))
         else:
             locations = dirty_locations
         # print(locations)
@@ -54,7 +54,7 @@ def parseCompanyListing(link):
             # invalid url, potentially do something to mark these as closed in the future
             if role.get('href') == '/ReaVNaiL/New-Grad-2024/blob/main':
                 continue
-            roles.append((role.string, role.get('href')))
+            roles.append((str(role.string), str(role.get('href'))))
 
         if len(roles) == 0:
             continue
@@ -63,7 +63,7 @@ def parseCompanyListing(link):
         raw_date_added = listing[4].string
         date_added = rawDateToDateTime(raw_date_added)
 
-        company = Company(company_name, company_link, locations, roles, False, date_added)
+        company = Company(str(company_name), str(company_link), locations, roles, False, date_added)
         companies.append(company)
 
     return companies
