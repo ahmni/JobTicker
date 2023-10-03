@@ -32,10 +32,8 @@ def parseCompanyListing(link):
     for company_tag_listing in company_list:
         # html listing as <td> element
         listing = company_tag_listing.find_all('td')
-        # print(listing[0])
         company_name, company_link = (listing[0].string,
                                       listing[0].a.get('href'))
-        # print(company_name, company_link)
 
         locations = []
         dirty_locations = listing[1].get_text().split('-')
@@ -45,7 +43,6 @@ def parseCompanyListing(link):
                 locations.append(str(location.strip()))
         else:
             locations = dirty_locations
-        # print(locations)
 
         roles = []
         role_html = listing[2].find_all('a')
@@ -57,7 +54,6 @@ def parseCompanyListing(link):
 
         if len(roles) == 0:
             continue
-        # print(roles)
 
         raw_date_added = listing[4].string
         date_added = rawDateToDateTime(raw_date_added)
