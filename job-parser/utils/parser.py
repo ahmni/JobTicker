@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 import requests
-import re
 from datetime import date
 
 def rawDateToDateTime(raw_date):
@@ -68,13 +67,14 @@ def parseCompanyListing(link):
 
     return companies
 
-companies = parseCompanyListing('https://github.com/ReaVNaiL/New-Grad-2024')
-
-with open('companies.txt', 'w') as file:
-    for company in companies:
-        positions = ""
-        for position in company.positions:
-            positions += position[0] + '(' + position[1] + ')' + ", "
-        positions = positions[:-1]
-        file.write(company.name + ' | ' + company.link + ' | ' + positions + ' | ' + company.posted_date + "\n")
+# print to file
+# companies = parseCompanyListing('https://github.com/ReaVNaiL/New-Grad-2024')
+#
+# with open('companies.txt', 'w') as file:
+#     for company in companies:
+#         positions = ""
+#         for position in company.positions:
+#             positions += position[0] + '(' + position[1] + ')' + ", "
+#         positions = positions[:-1]
+#         file.write(company.name + ' | ' + company.link + ' | ' + positions + ' | ' + company.posted_date + "\n")
 
