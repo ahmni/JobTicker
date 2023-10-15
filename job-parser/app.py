@@ -21,8 +21,18 @@ def getCompanies():
     cursor.execute(""" SELECT DISTINCT * FROM companies NATURAL JOIN
                    company_positions; """)
     data = cursor.fetchall()
+
+    parsed_company_data = []
+    for company_data in data:
+        parsed_company = {
+            'name': company_data[0],
+            'link': company_data[1],
+            'role': company_data[2],
+            'roleLink': company_data[3]
+        }
+        parsed_company_data.append(parsed_company)
     cursor.close()
-    res = {"body": [x for x in data]}
+    res = {"body": [x for x in parsed_company_data]}
 
     return json.dumps(res)
 
@@ -41,4 +51,4 @@ def getCompanyLocations():
 
     return json.dumps(res)
 
-app.run(host='0.0.0.0', port=8080)
+app.run(host='0.0.0.0', port=5050)
