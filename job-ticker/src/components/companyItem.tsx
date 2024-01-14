@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
 import { companyData } from '../App.js'
 
+export interface CompanyListItemProps {
+  companyData: companyData;
+  id: number;
+}
 
-function CompanyListItem({ name, role, link, roleLink}: companyData ): JSX.Element {
+function CompanyListItem(props: CompanyListItemProps): JSX.Element {
   return (
-    <tr>
-      <td><a href={link}> {name} </a></td>
-      <td><a href={roleLink}>{role} </a></td>
+    <tr id={props.id.toString()}>
+      <td><a href={props.companyData.link}> {props.companyData.name} </a></td>
+      <td><a href={props.companyData.roleLink}>{props.companyData.role} </a></td>
     </tr>
   );
 }

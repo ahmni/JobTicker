@@ -14,16 +14,19 @@ def populateDB(link):
     mycursor = mydb.cursor()
 
     # create tables
+    mycursor.execute("""DROP TABLE IF EXISTS companies""")
     mycursor.execute("""CREATE TABLE companies
                      (company_name VARCHAR(255), company_link VARCHAR(255))
                      """)
     mycursor.execute("ALTER TABLE companies ADD UNIQUE INDEX(company_name)")
-#
-#    mycursor.execute("""CREATE TABLE company_locations
-#                     (company_name VARCHAR(255), location VARCHAR(255))
-#                     """)
-#    mycursor.execute("""ALTER TABLE company_locations ADD UNIQUE
-#                     INDEX(company_name, location)""")
+
+    mycursor.execute("""DROP TABLE IF EXISTS company_locations""")
+    mycursor.execute("""CREATE TABLE company_locations
+                     (company_name VARCHAR(255), location VARCHAR(255))
+                     """)
+    mycursor.execute("""ALTER TABLE company_locations ADD UNIQUE
+                     INDEX(company_name, location)""")
+    mycursor.execute("""DROP TABLE IF EXISTS company_positions""")
 #
     mycursor.execute("""CREATE TABLE company_positions
                      (position VARCHAR(255), company_name VARCHAR(255),
@@ -49,4 +52,4 @@ def populateDB(link):
     mydb.commit()
     print("commited to database")
 
-populateDB('https://github.com/ReaVNaiL/New-Grad-2024')
+populateDB('https://github.com/ReaVNaiL/New-Grad-2024/blob/main/README.md')

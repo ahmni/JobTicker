@@ -33,7 +33,7 @@ def parseCompanyListing(link):
         # html listing as <td> element
         listing = company_tag_listing.find_all('td')
         company_name, company_link = (listing[0].string,
-                                      listing[0].a.get('href'))
+                                      listing[0].a.get('href')[2:-2])
 
         locations = []
         dirty_locations = listing[1].get_text().split('-')
@@ -48,15 +48,18 @@ def parseCompanyListing(link):
         role_html = listing[2].find_all('a')
         for role in role_html:
             # invalid url, potentially do something to mark these as closed in the future
-            if role.get('href') == '/ReaVNaiL/New-Grad-2024/blob/main':
+            role_link = role.get('href')[2:-2]
+            if role_link == '/ReaVNaiL/New-Grad-2024/blob/main':
                 continue
-            roles.append((str(role.string), str(role.get('href'))))
+            roles.append((str(role.string), str(role_link)))
 
         if len(roles) == 0:
             continue
 
         raw_date_added = listing[4].string
-        date_added = rawDateToDateTime(raw_date_added)
+        date_added = None
+        if raw_date_added:
+            date_added = rawDateToDateTime(raw_date_added)
 
         company = Company(str(company_name), str(company_link), locations, roles, False, date_added)
         companies.append(company)

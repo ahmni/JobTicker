@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
 import './App.css';
 import CompanyList from './components/companyList';
 
@@ -10,33 +9,29 @@ export interface companyData {
   roleLink: string;
 }
 
-
+const BACKEND_URL = 'http://localhost:5050/';
 
 
 function App() {
-  const [companyData, setCompanyData] = React.useState<companyData[]>([{
-    name: '',
-    link: '',
-    role: '',
-    roleLink: '',
-  }]);
+  const [companyData, setCompanyData] = React.useState<companyData[]>([]);
   useEffect(() => {
-    fetch('http://localhost:5050/')
-    .then(response => response.json())
-    .then(json => {
-      if (json !== undefined){
-        setCompanyData(json.body);
-      }
-    })
-    .catch(error => console.error(error));
+    setTimeout(() => {
+      fetch(BACKEND_URL)
+        .then(response => response.json())
+        .then(json => {
+          if (json !== undefined){
+            setCompanyData(json.body);
+          }
+        })
+        .catch(error => console.error(error));
+    }, 1000);
   }, []);
   console.log(companyData)
-          //{companyData ? <CompanyList {...companyData}/> : 'Loading...'}
   return (
     <div className="App">
       <header className="App-header">
         <div>
-          {companyData ? <CompanyList companyDataList={companyData}/> : 'Loading...'}
+          {companyData.length > 0 ? <CompanyList companyDataList={companyData}/> : 'Loading...'}
         </div>
       </header>
     </div>
